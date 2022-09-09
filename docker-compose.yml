@@ -37,13 +37,6 @@ services:
       - ./config/grafana.ini
     restart: unless-stopped
 
-  container_exporter:
-    image: prom/container-exporter
-    ports:
-      - 9104:9104
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
   pihole_exporter:
     image: ekofr/pihole-exporter:latest
     environment:
@@ -52,6 +45,17 @@ services:
       PIHOLE_PORT: "${PIHOLE_PORT:?err}"
     ports:
       - 9617:9617
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - ${DOCKER_ROOT-/rootfs/var/lib/docker}:/rootfs/var/lib/docker:ro
 
 volumes:
   grafana-data: {}
