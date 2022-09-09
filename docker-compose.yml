@@ -37,6 +37,22 @@ services:
       - ./config/grafana.ini
     restart: unless-stopped
 
+  container_exporter:
+    image: prom/container-exporter
+    ports:
+      - 9104:9104
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  pihole_exporter:
+    image: ekofr/pihole-exporter:latest
+    environment:
+      PIHOLE_API_TOKEN: "${PIHOLE_API_TOKEN:?err}"
+      PIHOLE_HOSTNAME: "${PIHOLE_HOSTNAME:?err}"
+      PIHOLE_PORT: "${PIHOLE_PORT:?err}"
+    ports:
+      - 9617:9617
+
 volumes:
   grafana-data: {}
   prometheus-data: {}
