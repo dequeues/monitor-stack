@@ -55,8 +55,8 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-      - ${DOCKER_ROOT-/rootfs/var/lib/docker}:/rootfs/var/lib/docker:ro
-
+      # Windows
+      # - /mnt/windows_docker/:/rootfs/var/lib/docker:ro
 volumes:
   grafana-data: {}
   prometheus-data: {}
