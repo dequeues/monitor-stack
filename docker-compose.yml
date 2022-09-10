@@ -47,7 +47,7 @@ services:
       - 9617:9617
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor@sha256:9360d7421c5e9b646ea13e5ced3f8e6da80017b0144733a04b7401dd8c01a5cb
     ports:
       - 8080:8080
     volumes:
