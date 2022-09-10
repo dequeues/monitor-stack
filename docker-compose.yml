@@ -12,6 +12,11 @@ services:
     ports:
       - 9090:9090
     restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: prometheus.local.lan
+      VIRTUAL_PORT: 9090
+    expose:
+      - 9090
 
   blackbox_exporter:
     image: prom/blackbox-exporter
@@ -20,21 +25,39 @@ services:
     ports:
       - 9115:9115
     restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: blackbox.home.lan
+      VIRTUAL_PORT: 9115
+    expose:
+      - 9115
 
   node_exporter:
     image: prom/node-exporter:latest
     ports:
       - 9100:9100
+    command:
+      - '--collector.systemd'
+      - '--collector.processes'
     restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: nodeexporter.home.lan
+      VIRTUAL_PORT: 9100
+    expose:
+      - 9100
 
   grafana:
     image: grafana/grafana
+    environment:
+      VIRTUAL_HOST: grafana.home.lan
+      VIRTUAL_PORT: 3000
     ports:
       - 3000:3000
     volumes:
       - grafana-data:/var/lib/grafana
     env_file:
       - ./config/grafana.ini
+    expose:
+      - 3000
     restart: unless-stopped
 
   pihole_exporter:
@@ -43,11 +66,18 @@ services:
       PIHOLE_API_TOKEN: "${PIHOLE_API_TOKEN:?err}"
       PIHOLE_HOSTNAME: "${PIHOLE_HOSTNAME:?err}"
       PIHOLE_PORT: "${PIHOLE_PORT:?err}"
+      VIRTUAL_HOST: piexporter.home.lan
+      VIRTUAL_PORT: 9617
     ports:
       - 9617:9617
+    expose:
+      - 9617
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor@sha256:9360d7421c5e9b646ea13e5ced3f8e6da80017b0144733a04b7401dd8c01a5cb
+    environment:
+      VIRTUAL_HOST: cadvisor.home.lan
+      VIRTUAL_PORT: 8080
     ports:
       - 8080:8080
     volumes:
@@ -57,6 +87,13 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       # Windows
       # - /mnt/windows_docker/:/rootfs/var/lib/docker:ro
+    expose:
+      - 8080
 volumes:
   grafana-data: {}
   prometheus-data: {}
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true
