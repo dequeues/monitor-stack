@@ -28,6 +28,8 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox_exporter:9115
+      - source_labels: [__param_module]
+        target_label: module
 
   - job_name: pihole-exporter
     metrics_path: /metrics

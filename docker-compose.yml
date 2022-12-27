@@ -72,6 +72,7 @@ services:
       - 9617:9617
     expose:
       - 9617
+    restart: unless-stopped
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor@sha256:9360d7421c5e9b646ea13e5ced3f8e6da80017b0144733a04b7401dd8c01a5cb
@@ -89,6 +90,8 @@ services:
       # - /mnt/windows_docker/:/rootfs/var/lib/docker:ro
     expose:
       - 8080
+    restart: unless-stopped
+
 volumes:
   grafana-data: {}
   prometheus-data: {}

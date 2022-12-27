@@ -2,6 +2,7 @@ version: '2'
 
 services:
   nginx-proxy:
+    restart: unless-stopped
     image: nginxproxy/nginx-proxy
     ports:
       - "80:80"
