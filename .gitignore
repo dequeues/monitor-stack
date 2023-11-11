@@ -1,3 +1,4 @@
 .env
 pihole/etc-dnsmasq.d/
 pihole/etc-pihole/
+.adg_exporter.env/

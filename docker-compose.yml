@@ -78,6 +78,14 @@ services:
       - 8080
     restart: unless-stopped
 
+  adguard-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile_ADG_Exporter
+    ports:
+      - "9716:9716"
+    env_file: .adg_exporter.env
+
 volumes:
   grafana-data: {}
   prometheus-data: {}
