@@ -10,10 +10,6 @@ ARG ADGUARD_HOSTNAME
 
 ADD "https://github.com/dequeues/adguard-exporter/releases/download/rel/adguard_exporter-linux-arm" ./adguard_exporter
 
-RUN ls
-#COPY ["/tmp/adguard_exporter", "/bin/adguard_exporter"]
-
-#RUN "chmod +x ./adguard_exporter"
 RUN ["chmod", "+x", "./adguard_exporter"]
 EXPOSE 9617
 
