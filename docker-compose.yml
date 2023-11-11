@@ -60,20 +60,6 @@ services:
       - 3000
     restart: unless-stopped
 
-  pihole_exporter:
-    image: ekofr/pihole-exporter:latest
-    environment:
-      PIHOLE_API_TOKEN: "${PIHOLE_API_TOKEN:?err}"
-      PIHOLE_HOSTNAME: "${PIHOLE_HOSTNAME:?err}"
-      PIHOLE_PORT: "${PIHOLE_PORT:?err}"
-      VIRTUAL_HOST: piexporter.home.lan
-      VIRTUAL_PORT: 9617
-    ports:
-      - 9617:9617
-    expose:
-      - 9617
-    restart: unless-stopped
-
   cadvisor:
     image: gcr.io/cadvisor/cadvisor@sha256:9360d7421c5e9b646ea13e5ced3f8e6da80017b0144733a04b7401dd8c01a5cb
     environment:
